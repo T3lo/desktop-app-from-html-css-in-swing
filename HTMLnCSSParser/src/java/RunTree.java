@@ -10,10 +10,10 @@ public class RunTree {
             nodes[i] = new TreeListNode(new Integer(i).toString());
             val = val + val;
         }
-        root.setLeft(nodes[0]);
-        nodes[0].setNextNode(nodes[1]);
-        nodes[0].setLeft(nodes[2]);
-        nodes[1].setLeft(nodes[3]);
+        root.add(nodes[0]);
+        nodes[0].add(nodes[1]);
+        nodes[0].add(nodes[2]);
+        nodes[1].add(nodes[3]);
         nodes[1].add(nodes[4]);
         root.print();
         System.out.println(nodes[0].isChildOf(root) + ", " + nodes[2].isChildOf(root) + "\n\n");

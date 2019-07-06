@@ -26,14 +26,15 @@ public class HTMLParser {
                 "thead",
                 "tbody",
             "dl", "dd", "code", "dt", "tt", "pre", "i", "th",
-            "caption", "strong", "noscript", "small", "font", "style"
+            "caption", "strong", "noscript", "small", "font", "style",
+            "svg", "path", "figure", "nav", "section", "header", "footer", "iframe", "textarea"
     };
     static final String []non_closing_tags = {
         "meta", "br", "hr", "img", "input", "link", "param"
     };
 
     public static void main(String []args) throws Exception {
-        String html_file = "I:\\XXX\\HTMLnCSSParser\\src\\resources\\web\\html\\test.html";
+        String html_file = "I:\\XXX\\HTMLnCSSParser\\src\\resources\\web\\html\\t2.html";
         System.out.println("Processing: " + html_file);
         FileReader fr = new FileReader(html_file);
         String file_content = "";
@@ -42,8 +43,9 @@ public class HTMLParser {
             file_content += (char) ch;
         }
         TreeListNode DOM = parseHTML(file_content);
-        // serializeTree(DOM);
+        serializeTree(DOM);
         printTree(DOM, " ");
+        deserializeTree();
     }
 
     static TreeListNode parseHTML(String file_content) {
@@ -260,12 +262,55 @@ public class HTMLParser {
         return attributes;
     }
 
-    // static void serializeTree(TreeListNode root) {
-    //     FileOutputStream fos = new FileOutputStream("I:\\XXX\\HTMLnCSSParser\\DOM");
-    //     ObjectOutputStream oos = new ObjectOutputStream(fos);
-    //     oos.close();
-    //     fos.close();
-    // }
+    static void serializeTree(TreeListNode root) throws Exception {
+        FileOutputStream fos = new FileOutputStream("I:\\XXX\\HTMLnCSSParser\\DOM.ser");
+        ObjectOutputStream oos = new ObjectOutputStream(fos);
+        // Stack<TreeListNode> s = new Stack<>();
+        // s.push(root);
+        // TreeListNode temp = null;
+        // while(!s.empty() && temp!=null) {
+        //     if(temp==null) {
+        //         temp = s.pop();
+        //     }
+        //     // Write object to memory
+        //     oos.writeObject(temp);
+        //     if(temp.hasLeft()) {
+        //         s.push(temp.getLeft());
+        //     }
+        //     temp = temp.getNextNode();
+        // }
+
+        oos.writeObject(root);
+
+        oos.close();
+        fos.close();
+        System.out.println("\t\t\t\t[Serialization Done]");
+    }
+
+    static TreeListNode deserializeTree() throws Exception {
+        FileInputStream fis = new FileInputStream("I:\\XXX\\HTMLnCSSParser\\DOM.ser");
+        ObjectInputStream ois = new ObjectInputStream(fis);
+        TreeListNode root = null;
+        root = (TreeListNode) ois.readObject();
+        // printTree(root, " ");
+        TreeListNode temp = null;
+        // while(!s.empty() && temp!=null) {
+        //     if(temp==null) {
+        //         temp = s.pop();
+        //     }
+        //     // Read into object from memory
+        //     ois.readObject(temp);
+        //     if(temp.hasLeft()) {
+        //         s.push(temp.getLeft());
+        //     }
+        //     temp = temp.getNextNode();
+        // }
+        ois.close();
+        fis.close();
+        System.out.println("\t\t\t\t[Deserialization Done]");
+        // root.print();
+        return root;
+    }
 
     static void printTree(TreeListNode root, String space) {
         // print the root->data
