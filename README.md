@@ -3,5 +3,5 @@ An application that lets you create the UI for java apps in HTML and CSS and the
 
 Only Windows version of run scripts available
 To run the code:
-> cd HTMLnCSSParser
-> run.bat
+#> cd HTMLnCSSParser
+#> run.bat
