@@ -1,0 +1,4 @@
+Environmental constants:
+* File Root
+* CSS File location
+* Java file location

@@ -1,0 +1,34 @@
+[X] Convert CSS to objects
+
+Req(TreeListNode {creation, insertion, print, check_child}, Stack-ops)
+[X] Create DOM objects from HTML code (** Just Closing tags **)
+
+Req(start pos after <tag>, end pos before </tag> )
+[X] insert innerHTML in the objects field
+
+Req(Extract tag-name from <tag class="..." id="..." lowda="..." lasun="...">{...}</tag>)
+[X] parse HTML tags for class, id and other properties
+[X] ***** (+) Make it add these as HashMap<Property_Name, Property_Value> inside of "TreeListNode" objects
+[X] Change to HashMap<String, ArrayList<String>> for attributes && Separators: {<space>, <,>, <;>}
+
+____________________________________________________
+
+[X] Print all the tags that the parser came across
+[X] Don't process Comments i.e. Ignore them
+[X] Create a list of all the tags in HTML: 
+    [X] 1> Closing tags (div, h1, span) 
+    [X] 2> Non-Closing tags (meta, br, hr, etc)
+[X] Identify these tags while parsing
+>> Not all are noted 
+
+
+[ ] Use Serializable to store the TreeListNode object in a file
+[ ] Extract the TreeListNode object from the file to get the DOM
+
+
+
+[ ] Make HTML tolerable
+
+Final : Req(HTML DOM with innerHTML, CSS parsed objects)
+[] Render the UI using the HTML DOM tree and CSS objects
+
