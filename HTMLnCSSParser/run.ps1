@@ -5,3 +5,8 @@ Set-Location build
 # java CSSParser $file
 Write-Output "##########################################"
 java HTMLParser
+Write-Output "##########################################"
+Write-Output "##########################################"
+Write-Output "##########################################"
+Write-Output "##########################################"
+java RunTree

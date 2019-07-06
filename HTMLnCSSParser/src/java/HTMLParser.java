@@ -33,7 +33,7 @@ public class HTMLParser {
     };
 
     public static void main(String []args) throws Exception {
-        String html_file = "I:\\XXX\\HTMLnCSSParser\\src\\resources\\web\\html\\t2.html";
+        String html_file = "I:\\XXX\\HTMLnCSSParser\\src\\resources\\web\\html\\test.html";
         System.out.println("Processing: " + html_file);
         FileReader fr = new FileReader(html_file);
         String file_content = "";
@@ -41,10 +41,12 @@ public class HTMLParser {
         while((ch=fr.read())!=-1) {
             file_content += (char) ch;
         }
-        parseHTML(file_content);
+        TreeListNode DOM = parseHTML(file_content);
+        // serializeTree(DOM);
+        printTree(DOM, " ");
     }
 
-    static void parseHTML(String file_content) {
+    static TreeListNode parseHTML(String file_content) {
         // Clean Code
         file_content = file_content
         .replaceAll("[ ]+", " ")
@@ -71,7 +73,7 @@ public class HTMLParser {
                 else {
                     System.out.println(file_content.substring(i+1, j));
                 }
-                i = j;
+                i = j;      // Allow this only if First line is "DOCTYPE html"
                 break;
             }
             i++;
@@ -84,6 +86,7 @@ public class HTMLParser {
         node_stack.push(root);
         start_pos_stack.push(0);
         TreeListNode temp = root;
+        boolean is_closing = false;
         while(i<len) {
             if(arr[i]=='<') {
                 // Look for closing >
@@ -127,8 +130,9 @@ public class HTMLParser {
                     // Replace this with indexOf("</"+tag+">")
                     if(tag.charAt(0)=='/' && ("/"+node_stack.peek().getData()).equals(tag)) {
                         // Error prone ## Must change to check underflow
-                        temp = node_stack.peek();
                         node_stack.pop();
+                        temp = node_stack.peek();
+                        System.out.println(tag + " <= " + temp.getData());
                         int start = start_pos_stack.pop();
                         temp.setInnerHTML(file_content.substring(start, i));
                     }
@@ -138,7 +142,7 @@ public class HTMLParser {
                         // System.out.println("SETTING attr to => " + node.getData() + node.printAttributes());
                         
                         // if br hr etc then don't push
-                        boolean is_closing = false;
+                        is_closing = false;
                         for(String _tag: closing_tags) {
                             if(_tag.equals(tag)) {
                                 is_closing = true;
@@ -162,6 +166,7 @@ public class HTMLParser {
                             continue;
                         }
                     }
+                    System.out.println("Temp : " + temp.getData() + "->" + ((temp.hasLeft())?temp.getLeft().getData():0));
                 }
                 i = j;
             }
@@ -170,6 +175,7 @@ public class HTMLParser {
         System.out.println();
         root.print();
         root.printAllTags();
+        return root;
     }
 
     static String extractTag(String tag) {
@@ -252,5 +258,25 @@ public class HTMLParser {
             start = i;
         }
         return attributes;
+    }
+
+    // static void serializeTree(TreeListNode root) {
+    //     FileOutputStream fos = new FileOutputStream("I:\\XXX\\HTMLnCSSParser\\DOM");
+    //     ObjectOutputStream oos = new ObjectOutputStream(fos);
+    //     oos.close();
+    //     fos.close();
+    // }
+
+    static void printTree(TreeListNode root, String space) {
+        // print the root->data
+        // if(it has leftNode) => printTree(root->left)
+        // if(it has nextNode) => printTree(root->nextNode)
+        System.out.println(space + root.getData());
+        if(root.hasLeft()) {
+            printTree(root.getLeft(), space+"   ");
+        }
+        if(root.hasNextNode()) {
+            printTree(root.getNextNode(), space);
+        }
     }
 }

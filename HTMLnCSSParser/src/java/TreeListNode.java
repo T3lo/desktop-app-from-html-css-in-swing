@@ -1,4 +1,5 @@
 import java.util.*;
+import java.io.Serializable;
 
 /*
 
@@ -20,7 +21,7 @@ import java.util.*;
 
 */
 
-public class TreeListNode {
+public class TreeListNode implements Serializable {
     String data;
     String innerHTML;
     TreeListNode left;
@@ -119,7 +120,7 @@ public class TreeListNode {
         if(this.hasLeft()) {
             TreeListNode temp = this.getLeft();
             this.setLeft(node);
-            node.setLeft(temp);
+            node.setNextNode(temp);
         }
         else {
             this.setLeft(node);

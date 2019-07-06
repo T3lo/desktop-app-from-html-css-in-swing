@@ -19,8 +19,10 @@ ____________________________________________________
     [X] 1> Closing tags (div, h1, span) 
     [X] 2> Non-Closing tags (meta, br, hr, etc)
 [X] Identify these tags while parsing
->> Not all are noted 
 
+############################################################
+############# [ ] >> Not all tags are noted (** Later on **)
+############################################################
 
 [ ] Use Serializable to store the TreeListNode object in a file
 [ ] Extract the TreeListNode object from the file to get the DOM
